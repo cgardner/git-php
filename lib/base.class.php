@@ -82,7 +82,7 @@ class Git_PHP_Base {
     
     $git_options = array_merge($defaults, $options);
     
-    return new Git_PHP_Base($git_options)
+    return new Git_PHP_Base($git_options);
   } // end function bare()
   
   /**
@@ -114,23 +114,13 @@ class Git_PHP_Base {
     $git_options = array_merge($defaults, $options);
     
     // if the working directory isn't a directory, create it.
-    if (!is_dir($git_options['working_dir'])) {
-      $this->mkdir($git_options['working_dir']);
+    if (!is_dir($git_options['working_directory'])) {
+      $this->mkdir($git_options['working_directory']);
     } // end if ($git_options['working_directory'])
     
     Git_PHP_Repository::init($git_options['repository']);
     return new Git_PHP_Base($git_options);
   } // end function init()
-  
-  /**
-   * undocumented function
-   *
-   * @return void
-   * @author Craig Gardner
-   **/
-  public function clone($repository, $name, $options) {
-    // do stuff
-  } // end function clone()
   
   /**
    * wrapper for mkdir($dir, 0755, TRUE)
@@ -139,7 +129,7 @@ class Git_PHP_Base {
    * @author Craig Gardner
    **/
   private function mkdir($dir) {
-    mkdir($dir, 0755, TRUE)
+    mkdir($dir, 0755, TRUE);
   } // end function mkdir()
 
   

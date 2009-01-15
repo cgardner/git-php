@@ -12,7 +12,7 @@
  **/
 
 
-class Repository {
+class Git_PHP_Repository {
   
   /**
    * Initializing a git repository using PHP
@@ -20,12 +20,13 @@ class Repository {
    * @return boolean
    * @author Craig Gardner
    **/
-  private function init($dir, $bare = FALSE) {
-    if (!file_exists($dir) && is_dir($dir)) {
-      $this->mkdir($dir);
+  public function init($dir, $bare = FALSE) {
+    $git_dir = $dir .'/.git';
+    if (!file_exists($git_dir) || !is_dir($git_dir)) {
+      $this->mkdir($git_dir);
     } // end if (!file_exists($dir) && is_dir($dir))
     
-    if (chdir($dir)) {
+    if (chdir($git_dir)) {
       if (file_exists('objects')) {
         return FALSE; // Repository has already been created
       } // end if (file_exists('objects'))
@@ -79,7 +80,7 @@ class Repository {
    * @author Craig Gardner
    **/
   private function mkdir($dir) {
-    mkdir($dir, 0755, TRUE);
+    mkdir($dir, 0777, TRUE);
   } // end function mkdir()
   
   

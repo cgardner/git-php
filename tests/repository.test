@@ -1,0 +1,81 @@
+<?php
+
+require_once 'PHPUnit/Framework.php';
+
+/**
+* Test Class
+*/
+class RepositoryTest extends PHPUnit_Framework_TestCase {
+  
+  private $del_files = array();
+  
+  /**
+   * undocumented function
+   *
+   * @return void
+   * @author Craig Gardner
+   **/
+  public function setUp() {
+    $directory = dirname(dirname(__FILE__));
+    require_once $directory .'/lib/repository.class.php';
+  } // end function setUp()
+  
+  /**
+   * Tear Down Function
+   *
+   * @return void
+   * @author Craig Gardner
+   **/
+  public function tearDown() {
+    foreach ($this->del_files as $file) {
+      exec('rm -rf '. $file);
+    } // end foreach ($this->del_files as $file)
+  } // end function tearDown()
+  
+  /**
+   * Test a new initialized repository
+   *
+   * @return void
+   * @author Craig Gardner
+   **/
+  public function testRepoInitCreate() {
+    $dir = realpath('.') .'/tmp/repo';
+    $this->del_files[] = $dir;
+    
+    // if the working directory isn't a directory, create it.
+    if (!is_dir($dir)) {
+      mkdir($dir, 0777, TRUE);
+    } // end if ($git_options['working_directory'])
+    
+    $repo = new Git_PHP_Repository();
+    $repo->init($dir);
+    
+    $this->assertFileExists($dir .'/.git/refs/heads');
+    $config = parse_ini_file($dir .'/.git/config');
+    $this->assertFalse((bool)$config['bare']);
+  } // end function testRepoInit()
+  
+  /**
+   * Test a new bare initialized repository
+   *
+   * @return void
+   * @author Craig Gardner
+   **/
+  public function testRepoInitBare() {
+    $dir = realpath('.') .'/tmp/repo';
+    $this->del_files[] = $dir;
+    
+    // if the working directory isn't a directory, create it.
+    if (!is_dir($dir)) {
+      mkdir($dir, 0777, TRUE);
+    } // end if ($git_options['working_directory'])
+    
+    $repo = new Git_PHP_Repository();
+    $repo->init($dir, TRUE);
+    
+    $config = parse_ini_file($dir .'/.git/config');
+    $this->assertTrue((bool)$config['bare']);
+  } // end function testRepoInitBare()
+}
+
+?>

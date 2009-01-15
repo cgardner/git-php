@@ -79,7 +79,7 @@ class Repository {
    * @author Craig Gardner
    **/
   private function mkdir($dir) {
-    mkdir($dir, 0755, TRUE)
+    mkdir($dir, 0755, TRUE);
   } // end function mkdir()
   
   

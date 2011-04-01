@@ -7,3 +7,8 @@ if (defined('LIBRARY_PATH') === FALSE) {
     }
     define('LIBRARY_PATH', $libraryPath);
 }
+
+set_include_path(implode(PATH_SEPARATOR, array(
+    LIBRARY_PATH,
+    get_include_path(),
+)));

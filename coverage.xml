@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<snapshot methodcount="1" methodscovered="1" statementcount="14" statementscovered="4" totalcount="15" totalcovered="5">
+  <package name="Git" methodcount="1" methodscovered="1" statementcount="12" statementscovered="4" totalcount="13" totalcovered="5">
+    <class name="Git_Repository" methodcount="0" methodscovered="0" statementcount="2" statementscovered="0" totalcount="2" totalcovered="0">
+      <sourcefile name="Repository.php" sourcefile="/home/gardnerc/src/git-php/library/Git/Repository.php">
+        <sourceline coveredcount="0">&lt;?php</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">/**</sourceline>
+        <sourceline coveredcount="0"> * Git Repository Class</sourceline>
+        <sourceline coveredcount="0"> * @package Git</sourceline>
+        <sourceline coveredcount="0"> * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0"> **/</sourceline>
+        <sourceline coveredcount="-1" startclass="1">class Git_Repository {</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Public Methods |publics</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">} // end class Git_Repository</sourceline>
+      </sourcefile>
+    </class>
+    <class name="Git_Commit" methodcount="0" methodscovered="0" statementcount="2" statementscovered="0" totalcount="2" totalcovered="0">
+      <sourcefile name="Commit.php" sourcefile="/home/gardnerc/src/git-php/library/Git/Commit.php">
+        <sourceline coveredcount="0">&lt;?php</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">/**</sourceline>
+        <sourceline coveredcount="0"> * Git Commit Class</sourceline>
+        <sourceline coveredcount="0"> * @package Git</sourceline>
+        <sourceline coveredcount="0"> * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0"> **/</sourceline>
+        <sourceline coveredcount="-1" startclass="1">class Git_Commit {</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Public Methods |publics</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">} // end class Git_Commit</sourceline>
+      </sourcefile>
+    </class>
+    <class name="Git_Config" methodcount="1" methodscovered="1" statementcount="4" statementscovered="4" totalcount="5" totalcovered="5">
+      <sourcefile name="Config.php" sourcefile="/home/gardnerc/src/git-php/library/Git/Config.php">
+        <sourceline coveredcount="0">&lt;?php</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">/**</sourceline>
+        <sourceline coveredcount="0"> * Git Config Object</sourceline>
+        <sourceline coveredcount="0"> * @package Git</sourceline>
+        <sourceline coveredcount="0"> * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0"> **/</sourceline>
+        <sourceline coveredcount="0" startclass="1">class Git_Config {</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Properties |props</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Instance of Git_Config</sourceline>
+        <sourceline coveredcount="0">     * @var Git_Config</sourceline>
+        <sourceline coveredcount="0">     **/</sourceline>
+        <sourceline coveredcount="0">    private static $instance;</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Public Methods |publics</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Get an Instance of Git_Config</sourceline>
+        <sourceline coveredcount="0">     * @param mixed $config</sourceline>
+        <sourceline coveredcount="0">     * @return Git_Config</sourceline>
+        <sourceline coveredcount="0">     * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0">     **/</sourceline>
+        <sourceline coveredcount="0">    public static function getInstance($config = NULL) {</sourceline>
+        <sourceline coveredcount="1">        if (is_null(self::$instance)) {</sourceline>
+        <sourceline coveredcount="1">            self::$instance = new self;</sourceline>
+        <sourceline coveredcount="1">        }</sourceline>
+        <sourceline coveredcount="1">        return self::$instance;</sourceline>
+        <sourceline coveredcount="0">    } // end function getInstance</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">} // end class Git_Config</sourceline>
+      </sourcefile>
+    </class>
+    <class name="Git_Branch" methodcount="0" methodscovered="0" statementcount="2" statementscovered="0" totalcount="2" totalcovered="0">
+      <sourcefile name="Branch.php" sourcefile="/home/gardnerc/src/git-php/library/Git/Branch.php">
+        <sourceline coveredcount="0">&lt;?php</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">/**</sourceline>
+        <sourceline coveredcount="0"> * Git Branch Class</sourceline>
+        <sourceline coveredcount="0"> * @package Git</sourceline>
+        <sourceline coveredcount="0"> * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0"> **/</sourceline>
+        <sourceline coveredcount="-1" startclass="1">class Git_Branch {</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Public Methods |publics</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">} // end class Git_Branch</sourceline>
+      </sourcefile>
+    </class>
+    <class name="Git_Log" methodcount="0" methodscovered="0" statementcount="2" statementscovered="0" totalcount="2" totalcovered="0">
+      <sourcefile name="Log.php" sourcefile="/home/gardnerc/src/git-php/library/Git/Log.php">
+        <sourceline coveredcount="0">&lt;?php</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">/**</sourceline>
+        <sourceline coveredcount="0"> * Git Log Class</sourceline>
+        <sourceline coveredcount="0"> * @package Git</sourceline>
+        <sourceline coveredcount="0"> * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0"> **/</sourceline>
+        <sourceline coveredcount="-1" startclass="1">class Git_Log {</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Public Methods |publics</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">} // end class Git_Log</sourceline>
+      </sourcefile>
+    </class>
+  </package>
+  <package name="git" methodcount="0" methodscovered="0" statementcount="2" statementscovered="0" totalcount="2" totalcovered="0">
+    <class name="Git" methodcount="0" methodscovered="0" statementcount="2" statementscovered="0" totalcount="2" totalcovered="0">
+      <sourcefile name="Git.php" sourcefile="/home/gardnerc/src/git-php/library/Git.php">
+        <sourceline coveredcount="0">&lt;?php</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">/**</sourceline>
+        <sourceline coveredcount="0"> * Git class</sourceline>
+        <sourceline coveredcount="0"> * @package git</sourceline>
+        <sourceline coveredcount="0"> * @author Craig Gardner &lt;craig_gardner@adp.com&gt;</sourceline>
+        <sourceline coveredcount="0"> **/</sourceline>
+        <sourceline coveredcount="-1" startclass="1">class Git {</sourceline>
+        <sourceline coveredcount="0">    /**</sourceline>
+        <sourceline coveredcount="0">     * Public Methods |publics</sourceline>
+        <sourceline coveredcount="0">     */</sourceline>
+        <sourceline coveredcount="0"></sourceline>
+        <sourceline coveredcount="0">} // end class Git</sourceline>
+      </sourcefile>
+    </class>
+  </package>
+</snapshot>

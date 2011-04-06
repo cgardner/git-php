@@ -20,12 +20,6 @@ class Test_Git_Base extends Test_Git_BaseTest {
     );
 
     /**
-     * Array of files to delete
-     * @var array
-     **/
-    private $deleteFiles = array();
-
-    /**
      * Public Methods |publics
      */
     /**
@@ -37,20 +31,6 @@ class Test_Git_Base extends Test_Git_BaseTest {
     public function setUp() {
         $this->base = new Git_Base($this->options);
     } // end function setUp
-
-    /**
-     * tearDown
-     * @param void
-     * @return void
-     * @author Craig Gardner <craig_gardner@adp.com>
-     **/
-    public function tearDown() {
-        foreach ($this->deleteFiles as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        }
-    } // end function tearDown
 
     /**
      * Test the Configure method
@@ -137,6 +117,8 @@ class Test_Git_Base extends Test_Git_BaseTest {
         $base = $this->base->init($repoPath);
         $this->assertInstanceOf('Git_Base', $base);
         $this->assertFileExists($repoPath);
+        $this->assertFileExists(sprintf('%s/.git', $repoPath));
+        $this->deleteFiles[] = $repoPath;
     } // end function testInit
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

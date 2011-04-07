@@ -154,7 +154,7 @@ class Git_Base {
      **/
     protected function getLib() {
         if (is_null($this->lib)) {
-            $this->lib = new Git_Lib($this);
+            $this->setLib(new Git_Lib($this));
         }
         return $this->lib;
     } // end function getLib()

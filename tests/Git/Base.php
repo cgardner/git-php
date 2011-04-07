@@ -17,6 +17,7 @@ class Test_Git_Base extends Test_Git_BaseTest {
      **/
     private $options = array(
         'working_directory' => '/home/gardnerc/src/scripts',
+        'path' => '/home/gardnerc/src/scripts',
     );
 
     /**
@@ -49,16 +50,16 @@ class Test_Git_Base extends Test_Git_BaseTest {
      * @author Craig Gardner <craig_gardner@adp.com>
      * @group all
      * @covers Git_Base::__construct
-     * @covers Git_Base::config
+     * @covers Git_Base::configure
      **/
-    public function testConfig() {
+    public function testConfigure() {
         $base = new Git_Base($this->options);
         $this->assertEquals($this->options['working_directory'], $base->getWorkingDirectory()->getPath());
 
         $base = new Git_Base();
-        $base->config($this->options);
+        $base->configure($this->options);
         $this->assertEquals($this->options['working_directory'], $base->getWorkingDirectory()->getPath());
-    } // end function testConfig
+    } // end function testConfigure
 
     /**
      * Test the getRepo Method
@@ -176,5 +177,33 @@ class Test_Git_Base extends Test_Git_BaseTest {
 
         $this->assertGreaterThan(0, $this->base->repoSize());
     } // end function testRepoSize
+    /**
+     * Test the Config method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::config
+     **/
+    public function testConfig() {
+        $origIni = parse_ini_file(sprintf('%s/.git/config', $this->base->getWorkingDirectory()->getPath()), TRUE);
+        // Test a variable set
+        $value = uniqid('config_');
+        $output = $this->base->config('user.name', $value);
+        $this->assertNull($output);
+
+        $ini = parse_ini_file(sprintf('%s/.git/config', $this->base->getWorkingDirectory()->getPath()), TRUE);
+        $this->assertEquals($ini['user']['name'], $value);
+
+        // Test a variable Get
+        $output = $this->base->config('user.name');
+        $this->assertEquals($value, $output);
+
+        $config = $this->base->config();
+        $this->assertInternalType('array', $config);
+        $this->assertEquals($config, $ini);
+
+        $this->base->config('user.name', $origIni['user']['name']);
+    } // end function testConfig
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

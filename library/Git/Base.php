@@ -49,11 +49,11 @@ class Git_Base {
      **/
     public function __construct(array $options = array()) {
         if (array_key_exists('working_directory', $options) && ($workingDir = realpath($options['working_directory'])) !== FALSE) {
-            $options['repo'] = realpath(sprintf('%s/.git', $workingDir));
-            $options['index'] = realpath(sprintf('%s/.git/index', $workingDir));
+            $options['repo'] = sprintf('%s/.git', $workingDir);
+            $options['index'] = sprintf('%s/.git/index', $workingDir);
         }
 
-        $this->config($options);
+        $this->configure($options);
     } // end function __construct
 
     /**
@@ -62,7 +62,7 @@ class Git_Base {
      * @return void
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
-    public function config(array $options = array()) {
+    public function configure(array $options = array()) {
         $methods = get_class_methods($this);
         foreach ($options as $key => $val) {
             $method = sprintf('set%s', str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
@@ -70,7 +70,7 @@ class Git_Base {
                 $this->$method($val);
             }
         }
-    } // end function config
+    } // end function configure
 
     /**
      * Initailize a git repository
@@ -88,7 +88,7 @@ class Git_Base {
         if ($options['working_directory'] && !file_exists($options['working_directory'])) {
             mkdir($options['working_directory'], 0777, TRUE);
         }
-        $this->config($options);
+        $this->configure($options);
 
         $this->getLib()->init();
 
@@ -106,7 +106,7 @@ class Git_Base {
     public function cloneRepo($repository, $name, array $options = array()) {
         $options = $this->getLib()->cloneRepo($repository, $name, $options);
         
-        $this->config($options);
+        $this->configure($options);
         return $this;
     } // end function cloneRepo
     
@@ -122,6 +122,25 @@ class Git_Base {
         return $matches[0];
     } // end function repoSize
     
+    /**
+     * Get or Set a git configuration option
+     * @param string $name
+     * @param string $value
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function config($name = NULL, $value = NULL) {
+        if (!is_null($name) && !is_null($value)) {
+            return $this->getLib()->configSet($name, $value);            
+        }
+        elseif (!is_null($name) && is_null($value)) {
+            return $this->getLib()->configGet($name);
+        }
+        else {
+            return $this->getLib()->configList();
+        }
+
+    } // end function config
     /**
      * Getters and Setters |getset
      */

@@ -120,5 +120,51 @@ class Test_Git_Base extends Test_Git_BaseTest {
         $this->assertFileExists(sprintf('%s/.git', $repoPath));
         $this->deleteFiles[] = $repoPath;
     } // end function testInit
+
+    /**
+     * Test the cloneRepo method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::cloneRepo
+     **/
+    public function testCloneRepo() {
+        $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
+        $repoPath = '/tmp/git-php';
+        $this->deleteFiles[] = $repoPath;
+        $options = array(
+            'working_directory' => $repoPath,
+            'path' => dirname($repoPath),
+        );
+        $this->base->cloneRepo($repoUrl, 'git-php', $options);
+        
+        $this->assertFileExists($options['working_directory']);
+        $this->assertFileExists(sprintf('%s/.git', $options['working_directory']));
+
+        // Check the git settings
+        $ini = parse_ini_file(sprintf('%s/.git/config', $repoPath), TRUE);
+        $this->assertEquals($repoUrl, $ini['remote "origin"']['url']);
+    } // end function testCloneRepo
+    /**
+     * Test the repoSize method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::repoSize
+     **/
+    public function testRepoSize() {
+        $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
+        $repoPath = '/tmp/git-php';
+        $this->deleteFiles[] = $repoPath;
+        $options = array(
+            'working_directory' => $repoPath,
+            'path' => dirname($repoPath),
+        );
+        $this->base->cloneRepo($repoUrl, 'git-php', $options);
+
+        $this->assertGreaterThan(0, $this->base->repoSize());
+    } // end function testRepoSize
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

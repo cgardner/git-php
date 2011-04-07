@@ -89,6 +89,34 @@ class Git_Base {
 
         return $this;
     } // end function init
+
+    /**
+     * Clone a Repository
+     * @param string $repository
+     * @param string $name
+     * @param array $options
+     * @return Git_Base
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function cloneRepo($repository, $name, array $options = array()) {
+        $lib = new Git_Lib($this);
+        $options = $lib->cloneRepo($repository, $name, $options);
+        
+        $this->config($options);
+        return $this;
+    } // end function cloneRepo
+    
+    /**
+     * Get the Repository Size
+     * @param void
+     * @return integer
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function repoSize() {
+        exec(sprintf('du -s %s', escapeshellarg($this->getWorkingDirectory()->getPath())), $output, $returnVar);
+        preg_match('@^([^\w]*?)\w*@', $output[0], $matches);
+        return $matches[0];
+    } // end function repoSize
     
     /**
      * Getters and Setters |getset

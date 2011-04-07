@@ -1,14 +1,16 @@
 <?php
+require_once 'Git/Path.php';
 
 /**
- * Git Log Class
+ * Git Index Class
  * @package Git
  * @author Craig Gardner <craig_gardner@adp.com>
  **/
-class Git_Log {
+class Git_Index extends Git_Path {
     /**
      * Public Methods |publics
      */
     
 
-} // end class Git_Log
+} // end class Git_Index extends Git_Path
+?>

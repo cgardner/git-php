@@ -113,6 +113,37 @@ class Git_Lib {
         return array_key_exists('bare', $options) ? array('repository' => $cloneDir) : array('working_directory' => $cloneDir);
     } // end function cloneRepo
     /**
+     * Set a Git Configuration option
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function configSet($name, $value) {
+        $this->executeCommand('config', array($name, $value));
+    } // end function configSet
+
+    /**
+     * Get a Git Configuration option
+     * @param string $name
+     * @return string
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function configGet($name) {
+        return $this->executeCommand('config', array($name));
+    } // end function configGet
+
+    /**
+     * Get a list of Configuration Options
+     * @param void
+     * @return array
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function configList() {
+        $config = parse_ini_file(sprintf('%s/.git/config', $this->getGitWorkingDirectory()), TRUE);
+        return $config;
+    } // end function configList
+    /**
      * Private Methods |privates
      */
     /**

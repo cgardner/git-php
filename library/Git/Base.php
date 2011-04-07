@@ -135,13 +135,14 @@ class Git_Base {
     /**
      * Setter for $this->index
      *
-     * @param Git_Index
+     * @param Git_Index $arg0
+     * @param boolean $check
      * @return Git_Base
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
-    public function setIndex($arg0) {
+    public function setIndex($arg0, $check = TRUE) {
         if (!($arg0 instanceOf Git_Index)) {
-            $arg0 = new Git_Index($arg0);
+            $arg0 = new Git_Index($arg0, $check);
         }
         $this->index = $arg0;
         return $this;
@@ -165,9 +166,9 @@ class Git_Base {
      * @return Git_Base
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
-    public function setWorkingDirectory($arg0) {
+    public function setWorkingDirectory($arg0, $check = TRUE) {
         if (!($arg0 instanceOf Git_WorkingDirectory)) {
-            $arg0 = new Git_WorkingDirectory($arg0);
+            $arg0 = new Git_WorkingDirectory($arg0, $check);
         }
         $this->working_directory = $arg0;
         return $this;

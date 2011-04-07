@@ -85,6 +85,34 @@ class Git_Lib {
     } // end function init
 
     /**
+     * Clone a repository
+     * @param string $repository
+     * @param string $name
+     * @param array $options
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function cloneRepo($repository, $name, array $options = array()) {
+        $this->setPath(array_key_exists('path', $options) ? $options['path'] : '.');
+        $cloneDir = array_key_exists('path', $options) ? sprintf('%s/%s', $this->getPath(), $name) : $name;
+
+        $cloneOptions = array();
+        if (array_key_exists('bare', $options)) {
+            $cloneOptions[] = '--bare';
+        }
+        if (array_key_exists('remote', $options)) {
+            array_push($cloneOptions, '-o', $options['remote']);
+        }
+        if (array_key_exists('depth', $options) && $options['depth'] > 0) {
+            array_push($cloneOptions, '--depth', $options['depth']);
+        }
+
+        array_push($cloneOptions, '--', $repository, $cloneDir);
+
+        $this->executeCommand('clone', $cloneOptions);
+        return array_key_exists('bare', $options) ? array('repository' => $cloneDir) : array('working_directory' => $cloneDir);
+    } // end function cloneRepo
+    /**
      * Private Methods |privates
      */
     /**

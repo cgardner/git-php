@@ -33,6 +33,12 @@ class Git_Base {
     private $index;
 
     /**
+     * Git_Lib object
+     * @var Git_Lib
+     **/
+    private $lib;
+
+    /**
      * Public Methods |publics
      */
     /**
@@ -84,8 +90,7 @@ class Git_Base {
         }
         $this->config($options);
 
-        $lib = new Git_Lib($this);
-        $lib->init();
+        $this->getLib()->init();
 
         return $this;
     } // end function init
@@ -99,8 +104,7 @@ class Git_Base {
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
     public function cloneRepo($repository, $name, array $options = array()) {
-        $lib = new Git_Lib($this);
-        $options = $lib->cloneRepo($repository, $name, $options);
+        $options = $this->getLib()->cloneRepo($repository, $name, $options);
         
         $this->config($options);
         return $this;
@@ -121,6 +125,32 @@ class Git_Base {
     /**
      * Getters and Setters |getset
      */
+    
+    /**
+     * Getter for $this->lib
+     *
+     * @param void
+     * @return Git_Lib
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    protected function getLib() {
+        if (is_null($this->lib)) {
+            $this->lib = new Git_Lib($this);
+        }
+        return $this->lib;
+    } // end function getLib()
+    
+    /**
+     * Setter for $this->lib
+     *
+     * @param Git_Lib
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    protected function setLib($arg0) {
+        $this->lib = $arg0;
+        return $this;
+    } // end function setLib()
     /**
      * Getter for $this->index
      *

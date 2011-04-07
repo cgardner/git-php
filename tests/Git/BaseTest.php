@@ -13,7 +13,7 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
      * Array of files to delete
      * @var array
      **/
-    private $deleteFiles = array();
+    protected $deleteFiles = array();
 
     /**
      * Public Methods |publics
@@ -26,7 +26,15 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
      **/
     public function tearDown() {
         foreach ($this->deleteFiles as $file) {
-            unlink($file);
+            if (is_dir($file)) {
+                exec(sprintf('rm -rf %s 2>&1', $file), $output, $return);
+                if ($return > 0) {
+                    var_dump($output);
+                }
+            }
+            else {
+                unlink($file);
+            }
         }
     } // end function tearDown
     

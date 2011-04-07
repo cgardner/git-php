@@ -33,6 +33,16 @@ class Test_Git_Base extends Test_Git_BaseTest {
     } // end function setUp
 
     /**
+     * teardown
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function tearDown() {
+        parent::tearDown();
+    } // end function tearDown
+
+    /**
      * Test the Configure method
      * @param void
      * @return void

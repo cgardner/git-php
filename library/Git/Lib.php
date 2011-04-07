@@ -54,7 +54,7 @@ class Git_Lib {
             }
         }
         elseif (is_array($base)) {
-            $this->config($base);
+            $this->configure($base);
         }
         
     } // end function __construct
@@ -64,7 +64,7 @@ class Git_Lib {
      * @return void
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
-    public function config(array $options) {
+    public function configure(array $options) {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
             $method = sprintf('set%s', str_replace(' ', '', ucwords(str_replace('_', ' ', $key))));
@@ -72,7 +72,7 @@ class Git_Lib {
                 $this->$method($value);
             }
         }
-    } // end function config
+    } // end function configure
 
     /**
      * Intialize a repository
@@ -144,12 +144,13 @@ class Git_Lib {
         $output = NULL;
         if ($chDir && ($origPath = getcwd()) != $path) {
             chdir($path);
-            $this->runCommand($gitCommand);
+            $output = $this->runCommand($gitCommand);
             chdir($origPath);
         }
         else {
-            $this->runCommand($gitCommand);
+            $output = $this->runCommand($gitCommand);
         }
+        return $output;
     } // end function executeCommand
 
     /**

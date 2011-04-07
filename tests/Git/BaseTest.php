@@ -27,9 +27,16 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
     public function tearDown() {
         foreach ($this->deleteFiles as $file) {
             if (is_dir($file)) {
+                exec(sprintf('chmod -R 777 %s 2>&1', $file));
                 exec(sprintf('rm -rf %s 2>&1', $file), $output, $return);
                 if ($return > 0) {
-                    var_dump($output);
+                    exec(sprintf('rm -r %s 2>&1', $file), $output, $return);
+                    if ($return > 0) {
+                        exec(sprintf('rmdir %s 2>&1', $file), $output, $return);
+                        if ($return > 0) {
+                            throw new Exception(sprintf('Failed to delete %s', $file));
+                        }
+                    }
                 }
             }
             else {

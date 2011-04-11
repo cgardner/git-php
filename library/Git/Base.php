@@ -4,6 +4,7 @@ require_once 'Git/Repository.php';
 require_once 'Git/WorkingDirectory.php';
 require_once 'Git/Index.php';
 require_once 'Git/Lib.php';
+require_once 'Git/Object.php';
 
 /**
  * Base Git Class
@@ -141,6 +142,15 @@ class Git_Base {
         }
 
     } // end function config
+    /**
+     * Get a git object
+     * @param string
+     * @return Git_Object
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function object($objectish) {
+        return new Git_Object($this, $objectish);
+    } // end function object
     /**
      * Getters and Setters |getset
      */

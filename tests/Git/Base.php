@@ -205,5 +205,20 @@ class Test_Git_Base extends Test_Git_BaseTest {
 
         $this->base->config('user.name', $origIni['user']['name']);
     } // end function testConfig
+    /**
+     * Test the Object method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::object
+     **/
+    public function testObject() {
+        $object = $this->base->object('HEAD');
+        $this->assertInstanceOf('Git_Object', $object);
+
+        $this->assertGreaterThan(0, $object->getSize());
+        $this->assertGreaterThan(0, count($object->getContents()));
+    } // end function testObject
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

@@ -134,6 +134,15 @@ class Git_Lib {
     } // end function configGet
 
     /**
+     * Get the size of an object
+     * @param string $sha
+     * @return integer
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function objectSize($sha) {
+        return (int)$this->executeCommand('cat-file', array('-s', $sha));
+    } // end function objectSize
+    /**
      * Get a list of Configuration Options
      * @param void
      * @return array
@@ -143,6 +152,51 @@ class Git_Lib {
         $config = parse_ini_file(sprintf('%s/.git/config', $this->getGitWorkingDirectory()), TRUE);
         return $config;
     } // end function configList
+    /**
+     * Get the Contents of a git object
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function objectContents($sha) {
+        return $this->executeCommand('cat-file', array('-p', $sha));
+    } // end function objectContents
+
+    /**
+     * Perform a rev-parse on an object
+     * @param string $string
+     * @return string
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function revParse($string) {
+        // If the string is a SHA1, return it
+        if (preg_match('@[A-Fa-f0-9]{40}@', $string)) {
+            return $string;
+        }
+        $rev = FALSE;
+        foreach (array('heads', 'remotes', 'tags') as $dir) {
+            $path = implode(DIRECTORY_SEPARATOR, array(
+                $this->getGitDir(),
+                'refs',
+                $dir,
+                $string,
+            ));
+            if (file_exists($path)) {
+                $rev = $path;
+                break;
+            }
+        }
+
+        if (!$rev) {
+            throw new Git_Exception(sprintf('Git Revision Not Found: %s', $string));
+        }
+        else {
+            return trim(file_get_contents($rev));
+        }
+        return $this->executeCommand('rev-parse', $string);
+
+
+    } // end function revParse
     /**
      * Private Methods |privates
      */

@@ -91,5 +91,33 @@ class Test_Git_Lib extends Test_Git_BaseTest {
         $this->lib->revParse('path/does/not/exist');
     } // end function testRevParseException
 
+    /**
+     * Test the cloneRepo method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::cloneRepo
+     **/
+    public function testCloneRepo() {
+        $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
+
+        $repoPath = '/tmp/git-php';
+        $this->deleteFiles[] = $repoPath;
+        $options = array(
+            'working_directory' => $repoPath,
+            'path' => dirname($repoPath),
+        );
+
+        $options = $this->lib->cloneRepo($repoUrl, 'git-php', $options);
+        $this->assertInternalType('array', $options);
+
+        $this->assertFileExists($options['working_directory']);
+        $this->assertFileExists(sprintf('%s/.git', $options['working_directory']));
+
+        // Check the git settings
+        $ini = parse_ini_file(sprintf('%s/.git/config', $repoPath), TRUE);
+        $this->assertEquals($repoUrl, $ini['remote "origin"']['url']);
+    } // end function testCloneRepo
 } // end class Test_Git_Lib extends Test_Git_BaseTest
 ?>

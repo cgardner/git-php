@@ -202,6 +202,15 @@ class Git_Lib {
 
     } // end function revParse
     /**
+     * Get the full tree information
+     * @param string $sha
+     * @return mixed
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function fullTree($sha) {
+        return $this->executeCommand('ls-tree', array('-r', $sha));
+    } // end function fullTree
+    /**
      * Private Methods |privates
      */
     /**

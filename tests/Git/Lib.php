@@ -17,12 +17,6 @@ class Test_Git_Lib extends Test_Git_BaseTest {
     private $lib;
 
     /**
-     * Git_Base Object
-     * @var Git_Base
-     **/
-    private $base;
-
-    /**
      * Object to perform tests with
      * @var Git_Object_Abstract
      **/
@@ -53,11 +47,7 @@ class Test_Git_Lib extends Test_Git_BaseTest {
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
     public function setUp() {
-        $options = array(
-            'working_directory' => '/home/gardnerc/src/scripts',
-            'path' => '/home/gardnerc/src/scripts',
-        );
-        $this->base = new Git_Base($options);
+        parent::setUp();
         $this->object = $this->base->object('master');
         $this->lib = $this->base->getLib();
 
@@ -216,5 +206,18 @@ class Test_Git_Lib extends Test_Git_BaseTest {
     public function testConfigList() {
         $this->assertEquals($this->origIni, $this->lib->configList());
     } // end function testConfigList
+    /**
+     * Test the fullTree Method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::fullTree
+     **/
+    public function testFullTree() {
+        $this->markTestIncomplete();
+        $tree = $this->lib->fullTree('master');
+        
+    } // end function testFullTree
 } // end class Test_Git_Lib extends Test_Git_BaseTest
 ?>

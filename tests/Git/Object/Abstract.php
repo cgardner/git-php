@@ -16,23 +16,13 @@ class Test_Git_Object_Abstract extends Test_Git_BaseTest {
     private $abstract;
 
     /**
-     * Git_Base object
-     * @var Git_Base
-     **/
-    private $base;
-
-    /**
      * setUp
      * @param void
      * @return void
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
     public function setUp() {
-        $options = array(
-            'working_directory' => '/home/gardnerc/src/scripts',
-            'path' => '/home/gardnerc/src/scripts'
-        );
-        $this->base = new Git_Base($options);
+        parent::setUp();
         $this->abstract = $this->base->object('master');
     } // end function setUp
 

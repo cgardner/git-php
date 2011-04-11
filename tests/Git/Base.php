@@ -11,27 +11,10 @@ class Test_Git_Base extends Test_Git_BaseTest {
     /**
      * Properties |props
      */
-    /**
-     * undocumented class variable
-     * @var string
-     **/
-    private $options = array(
-        'working_directory' => '/home/gardnerc/src/scripts',
-        'path' => '/home/gardnerc/src/scripts',
-    );
 
     /**
      * Public Methods |publics
      */
-    /**
-     * setUp
-     * @param void
-     * @return void
-     * @author Craig Gardner <craig_gardner@adp.com>
-     **/
-    public function setUp() {
-        $this->base = new Git_Base($this->options);
-    } // end function setUp
 
     /**
      * teardown
@@ -102,18 +85,6 @@ class Test_Git_Base extends Test_Git_BaseTest {
         $this->assertInstanceOf('Git_Index', $index); 
         $this->assertEquals($this->options['working_directory'] .'/.git/index', $index->getPath());
     } // end function testGetIndex
-
-    /**
-     * Test the bare method
-     * @param void
-     * @return void
-     * @author Craig Gardner <craig_gardner@adp.com>
-     * @group all
-     * @covers Git_Base::bare
-     **/
-    public function testBare() {
-        $this->markTestIncomplete();
-    } // end function testBare
 
     /**
      * Test the init method 
@@ -221,5 +192,21 @@ class Test_Git_Base extends Test_Git_BaseTest {
         $this->assertGreaterThan(0, $object->getSize());
         $this->assertGreaterThan(0, count($object->getContents()));
     } // end function testObject
+    /**
+     * Test the gTree method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::gTree
+     **/
+    public function testGTree() {
+        $object = $this->base->gTree('master');
+        $this->assertInstanceOf('Git_Object', $object);
+
+        $this->assertGreaterThan(0, $object->getSize());
+        $this->assertGreaterThan(0, count($object->getContents()));
+        
+    } // end function testGTree
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

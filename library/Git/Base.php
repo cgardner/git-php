@@ -152,6 +152,15 @@ class Git_Base {
         return new Git_Object($this, $objectish);
     } // end function object
     /**
+     * Get a Tree Object
+     * @param string $objectish
+     * @return Git_Object
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function gTree($objectish) {
+        return new Git_Object($this, $objectish, 'tree');
+    } // end function gTree
+    /**
      * Getters and Setters |getset
      */
     

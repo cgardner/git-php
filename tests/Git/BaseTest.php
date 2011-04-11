@@ -16,8 +16,34 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
     protected $deleteFiles = array();
 
     /**
+     * Git_Base Object
+     * @var Git_Base
+     **/
+    protected $base;
+
+    /**
+     * Options used to instantiate Git_Base Object
+     * @var array
+     **/
+    protected $options;
+
+    /**
      * Public Methods |publics
      */
+    /**
+     * setUp
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function setUp() {
+        $this->options = array(
+            'working_directory' => '/home/gardnerc/src/scripts',
+            'path' => '/home/gardnerc/src/scripts'
+        );
+        $this->base = new Git_Base($this->options);
+    } // end function setUp
+
     /**
      * tearDown
      * @param void

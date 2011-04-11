@@ -152,7 +152,7 @@ class Git_Base {
      * @return Git_Lib
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
-    protected function getLib() {
+    public function getLib() {
         if (is_null($this->lib)) {
             $this->setLib(new Git_Lib($this));
         }

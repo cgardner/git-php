@@ -34,7 +34,7 @@ class Test_Git_Lib extends Test_Git_BaseTest {
             'path' => '/home/gardnerc/src/scripts',
         );
         $base = new Git_Base($options);
-        $this->object = $base->object('HEAD');
+        $this->object = $base->object('master');
         $this->lib = $base->getLib();
     } // end function setUp
 
@@ -50,6 +50,20 @@ class Test_Git_Lib extends Test_Git_BaseTest {
         $this->markTestIncomplete();
         $this->lib->objectContents($this->object->getSha());
     } // end function testObjectContents
+
+    /**
+     * Test the objectSize method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::objectSize
+     **/
+    public function testObjectSize() {
+        $objectSize = $this->lib->objectSize($this->object->getSha());
+        $this->assertInternalType('integer', $objectSize);
+        $this->assertGreaterThan(0, $objectSize);
+    } // end function testObjectSize
 
     /**
      * Test the revParse method

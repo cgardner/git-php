@@ -144,6 +144,7 @@ class Test_Git_Base extends Test_Git_BaseTest {
         $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
         $repoPath = '/tmp/git-php';
         $this->deleteFiles[] = $repoPath;
+        $this->tearDown();
         $options = array(
             'working_directory' => $repoPath,
             'path' => dirname($repoPath),

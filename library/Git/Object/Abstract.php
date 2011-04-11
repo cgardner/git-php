@@ -104,7 +104,6 @@ class Git_Object_Abstract {
      **/
     public function getSha() {
         if (is_null($this->sha)) {
-            var_dump($this->getBase()->getLib()->revparse($this->getObjectish()));
             $this->setSha($this->getBase()->getLib()->revparse($this->getObjectish()));
         }
         return $this->sha;

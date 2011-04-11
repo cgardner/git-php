@@ -188,12 +188,16 @@ class Git_Lib {
         }
 
         if (!$rev) {
-            throw new Git_Exception(sprintf('Git Revision Not Found: %s', $string));
+            try {
+                return $this->executeCommand('rev-parse', array($string));
+            }
+            catch (Git_Exception $e) {
+                throw new Git_Exception(sprintf('Git Revision Not Found: %s', $string));
+            }
         }
         else {
             return trim(file_get_contents($rev));
         }
-        return $this->executeCommand('rev-parse', $string);
 
 
     } // end function revParse

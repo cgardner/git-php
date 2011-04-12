@@ -27,7 +27,7 @@ class Git_Object_Blob extends Git_Object_Abstract {
      * @return void
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
-    public function __construct(Git_Base $base, $objectish, $mode) {
+    public function __construct(Git_Base $base, $objectish, $mode = NULL) {
         parent::__construct($base, $objectish);
         $this->setMode($mode);
     } // end function __construct

@@ -74,6 +74,7 @@ class Test_Git_Object_Tree extends Test_Git_BaseTest {
      * @author Craig Gardner <craig_gardner@adp.com>
      * @group all
      * @covers Git_Object_Tree::getBlobs
+     * @covers Git_Object_Tree::setBlobs
      * @covers Git_Object_Tree::checkTree
      **/
     public function testGetBlobs() {
@@ -83,6 +84,10 @@ class Test_Git_Object_Tree extends Test_Git_BaseTest {
             $blob = array_shift($blobs);
             $this->assertInstanceOf('Git_Object_Blob', $blob);
         }
+
+        $blobs = uniqid('blobs_');
+        $this->assertInstanceOf('Git_Object_Tree', $this->tree->setBlobs($blobs));
+        $this->assertEquals($blobs, $this->tree->getBlobs());
     } // end function testGetBlobs
 
     /**
@@ -92,6 +97,7 @@ class Test_Git_Object_Tree extends Test_Git_BaseTest {
      * @author Craig Gardner <craig_gardner@adp.com>
      * @group all
      * @covers Git_Object_Tree::getTrees
+     * @covers Git_Object_Tree::setTrees
      * @covers Git_Object_Tree::checkTree
      **/
     public function testGetTrees() {
@@ -101,5 +107,23 @@ class Test_Git_Object_Tree extends Test_Git_BaseTest {
             $tree = array_shift($trees);
             $this->assertInstanceOf('Git_Object_Tree', $tree);
         }
+
+        $trees = uniqid('trees_');
+        $this->assertInstanceOf('Git_Object_Tree', $this->tree->setTrees($trees));
+        $this->assertEquals($trees, $this->tree->getTrees());
     } // end function testGetTrees
+    /**
+     * Test the getMode method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Object_Tree::getMode
+     * @covers Git_Object_Tree::setMode
+     **/
+    public function testGetMode() {
+        $mode = uniqid('mode_');
+        $this->assertInstanceOf('Git_Object_Tree', $this->tree->setMode($mode));
+        $this->assertEquals($mode, $this->tree->getMode());  
+    } // end function testGetMode
 } // end class Test_Git_Object_Tree extends Test_Git_BaseTest

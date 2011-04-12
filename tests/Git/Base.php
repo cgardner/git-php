@@ -202,7 +202,7 @@ class Test_Git_Base extends Test_Git_BaseTest {
      **/
     public function testGTree() {
         $object = $this->base->gTree('master');
-        $this->assertInstanceOf('Git_Object', $object);
+        $this->assertInstanceOf('Git_Object_Tree', $object);
 
         $this->assertGreaterThan(0, $object->getSize());
         $this->assertGreaterThan(0, count($object->getContents()));
@@ -219,5 +219,17 @@ class Test_Git_Base extends Test_Git_BaseTest {
     public function testGCommit() {
         $this->assertInstanceOf('Git_Object_Commit', $this->base->gCommit('HEAD'));
     } // end function testGCommit
+
+    /**
+     * Test the gBlob method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::gBlob
+     **/
+    public function testGBlob() {
+        $this->assertInstanceOf('Git_Object_Blob', $this->base->gBlob('HEAD:build.properties'));
+    } // end function testGBlob
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

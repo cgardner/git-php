@@ -158,7 +158,7 @@ class Git_Base {
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
     public function gTree($objectish) {
-        return new Git_Object($this, $objectish, 'tree');
+        return Git_Object::factory($this, $objectish, 'tree');
     } // end function gTree
 
     /**
@@ -172,9 +172,18 @@ class Git_Base {
     } // end function gCommit
 
     /**
+     * Get a Blob Object
+     * @param string $objectish
+     * @return Git_Object_Blob
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function gBlob($objectish) {
+        return Git_Object::factory($this, $objectish, 'blob');
+    } // end function gBlob
+
+    /**
      * Getters and Setters |getset
      */
-    
     /**
      * Getter for $this->lib
      *

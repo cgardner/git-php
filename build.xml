@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<project name="git-php" description="Git library written in PHP" default="lint">
+    <property file="${project.basedir}/build.properties" />
+
+    <!-- =============================== -->
+    <!-- Target: vim                     -->
+    <!-- =============================== -->
+    <target name="vim" depends="public" />
+
+    <!-- =============================== -->
+    <!-- Target: lint                    -->
+    <!-- =============================== -->
+    <target name="lint" description="Run Syntax checks">
+        <phplint haltonfailure="true" deprecatedAsError="true">
+            <fileset dir="${project.basedir}/library" />
+        </phplint>
+    </target>
+
+    <!-- =============================== -->
+    <!-- Target: prepare-test            -->
+    <!-- =============================== -->
+    <target name="prepare-test" depends="clean">
+        <mkdir dir="${coverage.testdir}" />
+        <mkdir dir="${coverage.reportdir}" />
+        <mkdir dir="${coverage.unitdir}" />
+    </target>
+
+    <!-- =============================== -->
+    <!-- Target: clean                   -->
+    <!-- =============================== -->
+    <target name="clean">
+        <delete includeemptydirs="true" quiet="true">
+            <fileset dir="${coverage.dir}">
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- =============================== -->
+    <!-- Target: test                    -->
+    <!-- =============================== -->
+    <target name="test" depends="prepare-test" description="Run Automated Tests">
+        <!-- Prepare the Coverage Reports -->
+        <coverage-setup database="${coverage.db}">
+            <fileset dir="${project.basedir}/library">
+                <include name="**/*.php" />
+            </fileset>
+        </coverage-setup>
+
+        <!-- Run the Automated Tests -->
+        <phpunit haltonerror="false" haltonfailure="false" codecoverage="true"
+            haltonskipped="false" bootstrap="${project.basedir}/tests/bootstrap.php">
+            <formatter type="xml" usefile="true" todir="${coverage.testdir}" />
+            <formatter type="plain" usefile="false" />
+            <batchtest name="Git Library Automated Tests">
+                <fileset dir="${project.basedir}/tests">
+                    <include name="**/*.php" />
+                    <exclude name="Git/BaseTest.php" />
+                </fileset>
+            </batchtest>
+        </phpunit>
+
+        <!-- Build the reports -->
+        <phpunitreport infile="${coverage.testdir}/testsuites.xml" todir="${coverage.unitdir}" />
+        <coverage-report>
+            <report todir="${coverage.reportdir}" styledir="/home/gardnerc/src/PEAR/phing/etc/" />
+        </coverage-report>
+    </target>
+
+    <!-- =============================== -->
+    <!-- Target: public                -->
+    <!-- =============================== -->
+    <target name="public" depends="test">
+        <property name="coverage.public" value="/home/gardnerc/public_html/git-php" />
+        <delete includeemptydirs="true" quiet="true">
+            <fileset dir="${coverage.public}" />
+        </delete>
+        <move file="${coverage.dir}" todir="${coverage.public}" overwrite="true" />
+    </target>
+</project>

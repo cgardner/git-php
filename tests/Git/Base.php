@@ -208,5 +208,16 @@ class Test_Git_Base extends Test_Git_BaseTest {
         $this->assertGreaterThan(0, count($object->getContents()));
         
     } // end function testGTree
+    /**
+     * Test the gCommit method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::gCommit
+     **/
+    public function testGCommit() {
+        $this->assertInstanceOf('Git_Object_Commit', $this->base->gCommit('HEAD'));
+    } // end function testGCommit
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

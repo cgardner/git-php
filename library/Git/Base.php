@@ -160,6 +160,17 @@ class Git_Base {
     public function gTree($objectish) {
         return new Git_Object($this, $objectish, 'tree');
     } // end function gTree
+
+    /**
+     * Get a Commit
+     * @param string $objectish
+     * @return Git_Object_Commit
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function gCommit($objectish) {
+        return Git_Object::factory($this, $objectish, 'commit');
+    } // end function gCommit
+
     /**
      * Getters and Setters |getset
      */

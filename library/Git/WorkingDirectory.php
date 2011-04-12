@@ -3,7 +3,7 @@ require_once 'Git/Path.php';
 
 /**
  * Git Working Directory Class
- * @package git
+ * @package Git
  * @author Craig Gardner <craig_gardner@adp.com>
  **/
 class Git_WorkingDirectory extends Git_Path {

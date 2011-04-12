@@ -234,5 +234,55 @@ class Test_Git_Lib extends Test_Git_BaseTest {
         $this->assertTrue(array_key_exists('tree', $data));
         $this->assertTrue(array_key_exists('blob', $data));
     } // end function testLsTree
+    /**
+     * Test the tagSha method
+     * @param string $tag
+     * @param boolean $expected
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::tagSha
+     * @dataProvider tagShaDataProvider
+     **/
+    public function testTagSha($tag, $expected) {
+        try {
+            $sha = $this->lib->tagSha($tag);
+            $this->assertInternalType('string', $sha);
+            $this->assertRegExp('@[A-Fa-f0-9]{40}@', $sha);
+        }
+        catch (Exception $e) {
+            if ($expected) {
+                $this->fail();
+            }
+        }
+    } // end function testTagSha
+
+    /**
+     * Test the objectType method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::objectType
+     **/
+    public function testObjectType() {
+        
+    } // end function testObjectType
+
+    /**
+     * Data Providers
+     */
+    /**
+     * Data Provider for the testTagSha test
+     * @param void
+     * @return array
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function tagShaDataProvider() {
+        return array(
+            array('test', TRUE),
+            array('does/not/exist', FALSE),
+        );
+    } // end function tagShaDataProvider
 } // end class Test_Git_Lib extends Test_Git_BaseTest
 ?>

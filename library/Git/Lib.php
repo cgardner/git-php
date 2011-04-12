@@ -234,6 +234,34 @@ class Git_Lib {
         return $data;
     } // end function lsTree
     /**
+     * Get a SHA for a tag
+     * @param string $tagName
+     * @return string
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function tagSha($tagName) {
+        $head = implode(DIRECTORY_SEPARATOR, array(
+            $this->getGitDir(),
+            'refs',
+            'tags',
+            $tagName,
+        ));
+        if (file_exists($head)) {
+            return trim(file_get_contents($head));
+        }
+        return $this->executeCommand('show-ref', array('--tags', '-s', $tagName));
+    } // end function tagSha
+    /**
+     * Get the object type for an object
+     * @param string $sha
+     * @return string
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function objectType($sha) {
+        return $this->executeCommand('cat-file', array('-t', $sha));
+    } // end function objectType
+
+    /**
      * Private Methods |privates
      */
     /**

@@ -231,5 +231,19 @@ class Test_Git_Base extends Test_Git_BaseTest {
     public function testGBlob() {
         $this->assertInstanceOf('Git_Object_Blob', $this->base->gBlob('HEAD:build.properties'));
     } // end function testGBlob
+
+    /**
+     * Test the log method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Base::log
+     **/
+    public function testLog() {
+        $log = $this->base->log(10);
+        $this->assertInstanceOf('Git_Log', $log);
+        
+    } // end function testLog
 } // end class Test_Git_Base extends PHPUnit_Framework_TestCase
 ?>

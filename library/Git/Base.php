@@ -4,6 +4,7 @@ require_once 'Git/Repository.php';
 require_once 'Git/WorkingDirectory.php';
 require_once 'Git/Index.php';
 require_once 'Git/Lib.php';
+require_once 'Git/Log.php';
 require_once 'Git/Object.php';
 
 /**
@@ -180,6 +181,16 @@ class Git_Base {
     public function gBlob($objectish) {
         return Git_Object::factory($this, $objectish, 'blob');
     } // end function gBlob
+
+    /**
+     * Get a Git_Log Object
+     * @param integer $count
+     * @return Git_Log
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function log($count = 30) {
+        return new Git_Log($this, $count);
+    } // end function log
 
     /**
      * Getters and Setters |getset

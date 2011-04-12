@@ -43,6 +43,7 @@
         <coverage-setup database="${coverage.db}">
             <fileset dir="${project.basedir}/library">
                 <include name="**/*.php" />
+                <exclude name="**/Exception**" />
             </fileset>
         </coverage-setup>
 

@@ -5,6 +5,9 @@ require_once realpath(dirname(__FILE__) .'/BaseTest.php');
  * Test the Git_Lib class
  * @package Git
  * @author Craig Gardner <craig_gardner@adp.com>
+ * @TODO Add coverage for Git_Lib::executeCommand
+ * @TODO Add coverage for Git_Lib::objectType
+ * @TODO Cover the exception thrown in Git_Lib::runCommand
  **/
 class Test_Git_Lib extends Test_Git_BaseTest {
     /**
@@ -41,6 +44,18 @@ class Test_Git_Lib extends Test_Git_BaseTest {
     private $origIniString;
 
     /**
+     * Repository URL
+     * @var string
+     **/
+    private $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
+
+    /**
+     * undocumented class variable
+     * @var string
+     **/
+    private $repoPath = '/tmp/git-php';
+
+    /**
      * setUp
      * @param void
      * @return void
@@ -55,6 +70,8 @@ class Test_Git_Lib extends Test_Git_BaseTest {
         $this->iniFile = sprintf('%s/.git/config', $this->base->getWorkingDirectory()->getPath());
         $this->origIniString = file_get_contents($this->iniFile);
         $this->origIni = parse_ini_file($this->iniFile, TRUE);
+
+        $this->deleteFiles[] = $this->repoPath;
     } // end function setUp
 
     /**
@@ -148,26 +165,112 @@ class Test_Git_Lib extends Test_Git_BaseTest {
      * @covers Git_Lib::cloneRepo
      **/
     public function testCloneRepo() {
-        $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
-
-        $repoPath = '/tmp/git-php';
-        $this->deleteFiles[] = $repoPath;
         $options = array(
-            'working_directory' => $repoPath,
-            'path' => dirname($repoPath),
+            'working_directory' => $this->repoPath,
+            'path' => dirname($this->repoPath),
         );
 
-        $options = $this->lib->cloneRepo($repoUrl, 'git-php', $options);
+        $options = $this->lib->cloneRepo($this->repoUrl, 'git-php', $options);
         $this->assertInternalType('array', $options);
 
         $this->assertFileExists($options['working_directory']);
         $this->assertFileExists(sprintf('%s/.git', $options['working_directory']));
 
         // Check the git settings
-        $ini = parse_ini_file(sprintf('%s/.git/config', $repoPath), TRUE);
-        $this->assertEquals($repoUrl, $ini['remote "origin"']['url']);
+        $ini = parse_ini_file(sprintf('%s/.git/config', $this->repoPath), TRUE);
+        $this->assertEquals($this->repoUrl, $ini['remote "origin"']['url']);
     } // end function testCloneRepo
 
+    /**
+     * Clone a Bare Repository 
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::cloneRepo
+     **/
+    public function testCloneBareRepo() {
+        /**
+         * Make sure the path doesn't exist before continuing
+         * For some reason, the tearDown method isn't running properly
+         */
+        $this->removeFile($this->repoPath);
+
+        $options = array(
+            'working_directory' => $this->repoPath,
+            'path' => dirname($this->repoPath),
+            'bare' => TRUE,
+        );
+
+        $options = $this->lib->cloneRepo($this->repoUrl, 'git-php', $options);
+        $this->assertInternalType('array', $options);
+
+        $this->assertFileExists($this->repoPath);
+        $this->assertFileNotExists(sprintf('%s/.git', $this->repoPath));
+        $this->assertFileExists(sprintf('%s/HEAD', $this->repoPath));
+    } // end function testCloneBareRepo
+
+    /**
+     * Test the cloneRepo method and change the name of the origin
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::cloneRepo
+     **/
+    public function testCloneRepoOrigin() {
+        /**
+         * Make sure the path doesn't exist before continuing
+         * For some reason, the tearDown method isn't running properly
+         */
+        $this->removeFile($this->repoPath);
+        $remote = uniqid('origin_');
+        $options = array(
+            'working_directory' => $this->repoPath,
+            'path' => dirname($this->repoPath),
+            'remote' => $remote,
+        );
+
+        $options = $this->lib->cloneRepo($this->repoUrl, 'git-php', $options);
+        $this->assertInternalType('array', $options);
+
+        $this->assertFileExists($options['working_directory']);
+        $this->assertFileExists(sprintf('%s/.git', $options['working_directory']));
+
+        // Check the git settings
+        $ini = parse_ini_file(sprintf('%s/.git/config', $this->repoPath), TRUE);
+        $this->assertTrue(array_key_exists(sprintf('remote "%s"', $remote), $ini));
+    } // end function testCloneRepoOrigin
+
+    /**
+     * Test the cloneRepo method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::cloneRepo
+     **/
+    public function testCloneRepoDepth() {
+        /**
+         * Make sure the path doesn't exist before continuing
+         * For some reason, the tearDown method isn't running properly
+         */
+        $this->removeFile($this->repoPath);
+        $remote = uniqid('origin_');
+        $options = array(
+            'working_directory' => $this->repoPath,
+            'path' => dirname($this->repoPath),
+            'depth' => 3,
+        );
+
+        $options = $this->lib->cloneRepo($this->repoUrl, 'git-php', $options);
+        $this->assertInternalType('array', $options);
+
+        $this->assertFileExists($this->repoPath);
+        $this->assertFileExists(sprintf('%s/.git', $this->repoPath));
+
+        $this->assertFileExists(sprintf('%s/.git/shallow', $this->repoPath));
+    } // end function testCloneRepoDepth
     /**
      * Test the configSet method
      * @param void
@@ -269,6 +372,48 @@ class Test_Git_Lib extends Test_Git_BaseTest {
         
     } // end function testObjectType
 
+    /**
+     * Test the getPath method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::getPath
+     * @covers Git_Lib::setPath
+     **/
+    public function testGetPath() {
+        $path = uniqid('path_');
+        $this->assertInstanceOf('Git_Lib', $this->lib->setPath($path));
+        $this->assertEquals($path, $this->lib->getPath());  
+    } // end function testGetPath
+    /**
+     * Test the getGitIndeFile
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::getGitIndexFile
+     * @covers Git_Lib::setGitIndexFile
+     **/
+    public function testGetGitIndexFile() {
+        $indexFile = uniqid('indexFile_');
+        $this->assertInstanceOf('Git_Lib', $this->lib->setGitIndexFile($indexFile));
+        $this->assertEquals($indexFile, $this->lib->getGitIndexFile());
+    } // end function testGetGitIndexFile
+    /**
+     * Test the getGitDir method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::getGitDir
+     * @covers Git_Lib::setGitDir
+     **/
+    public function testGetGitDir() {
+        $gitDir = uniqid('gitDir_');
+        $this->assertInstanceOf('Git_Lib', $this->lib->setGitDir($gitDir));
+        $this->assertEquals($gitDir, $this->lib->getGitDir());  
+    } // end function testGetGitDir
     /**
      * Data Providers
      */

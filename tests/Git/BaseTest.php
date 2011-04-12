@@ -52,24 +52,34 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
      **/
     public function tearDown() {
         foreach ($this->deleteFiles as $file) {
-            if (is_dir($file)) {
-                exec(sprintf('chmod -R 777 %s 2>&1', $file));
-                exec(sprintf('rm -rf %s 2>&1', $file), $output, $return);
+            $this->removeFile($file);
+        }
+    } // end function tearDown
+
+    /**
+     * Remove a file from the filesystem
+     * @param string $filename
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    protected function removeFile($file) {
+        if (is_dir($file)) {
+            exec(sprintf('chmod -R 777 %s 2>&1', $file));
+            exec(sprintf('rm -rf %s 2>&1', $file), $output, $return);
+            if ($return > 0) {
+                exec(sprintf('rm -r %s 2>&1', $file), $output, $return);
                 if ($return > 0) {
-                    exec(sprintf('rm -r %s 2>&1', $file), $output, $return);
+                    exec(sprintf('rmdir %s 2>&1', $file), $output, $return);
                     if ($return > 0) {
-                        exec(sprintf('rmdir %s 2>&1', $file), $output, $return);
-                        if ($return > 0) {
-                            throw new Exception(sprintf('Failed to delete %s', $file));
-                        }
+                        throw new Exception(sprintf('Failed to delete %s', $file));
                     }
                 }
             }
-            else {
-                unlink($file);
-            }
         }
-    } // end function tearDown
+        else {
+            unlink($file);
+        }
+    } // end function removeFile
     
     /**
      * Protected Methods |protect

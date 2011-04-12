@@ -33,7 +33,7 @@ class Test_Git_Object extends Test_Git_BaseTest {
      * @author Craig Gardner <craig_gardner@adp.com>
      * @group all
      * @covers Git_Object::factory
-     * @expectedException Git_Exception_Execute
+     * @expectedException Git_Object_Exception_TagDoesNotExist
      **/
     public function testFactoryTagDoesNotExistException() {
         $object = Git_Object::factory($this->base, 'tag/does/not/exist', NULL, TRUE);

@@ -4,6 +4,7 @@ require_once 'Git/Object/Tag.php';
 require_once 'Git/Object/Tree.php';
 require_once 'Git/Object/Blob.php';
 require_once 'Git/Object/Commit.php';
+require_once 'Git/Object/Exception/TagDoesNotExist.php';
 
 /**
  * Git Object Class
@@ -26,11 +27,13 @@ class Git_Object extends Git_Object_Abstract {
      **/
     public static function factory($base, $objectish, $type = NULL, $isTag = FALSE) {
         if ($isTag) {
-            $sha = $base->getLib()->tagSha($objectish);
-            if ($sha == '') {
+            try {
+                $sha = $base->getLib()->tagSha($objectish);
+                return new Git_Object_Tag($base, $sha, $objectish);
+            }
+            catch (Git_Exception_Execute $e) {
                 throw new Git_Object_Exception_TagDoesNotExist(sprintf('Tag %s Does not exist', $objectish));
             }
-            return new Git_Object_Tag($base, $sha, $objectish);
         }
 
         $type = $base->getLib()->objectType($objectish);

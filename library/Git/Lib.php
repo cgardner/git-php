@@ -251,6 +251,7 @@ class Git_Lib {
         }
         return $this->executeCommand('show-ref', array('--tags', '-s', $tagName));
     } // end function tagSha
+
     /**
      * Get the object type for an object
      * @param string $sha

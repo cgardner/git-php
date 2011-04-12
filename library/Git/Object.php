@@ -36,7 +36,9 @@ class Git_Object extends Git_Object_Abstract {
             }
         }
 
-        $type = $base->getLib()->objectType($objectish);
+        if (is_null($type)) {
+            $type = $base->getLib()->objectType($objectish);
+        }
         switch ($type) {
             case 'blob':
                 $klass = 'Git_Object_Blob';

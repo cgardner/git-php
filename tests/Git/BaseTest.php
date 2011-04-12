@@ -38,8 +38,8 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
      **/
     public function setUp() {
         $this->options = array(
-            'working_directory' => '/home/gardnerc/src/scripts',
-            'path' => '/home/gardnerc/src/scripts'
+            'working_directory' => BASE_DIR,
+            'path' => BASE_DIR,
         );
         $this->base = new Git_Base($this->options);
     } // end function setUp

@@ -215,9 +215,24 @@ class Test_Git_Lib extends Test_Git_BaseTest {
      * @covers Git_Lib::fullTree
      **/
     public function testFullTree() {
-        $this->markTestIncomplete();
         $tree = $this->lib->fullTree('master');
-        
+        $this->assertInternalType('string', $tree);
+        $this->assertGreaterThan(0, count($tree));
     } // end function testFullTree
+
+    /**
+     * Test the lsTree method
+     * @param void
+     * @return void
+     * @author Craig Gardner <craig_gardner@adp.com>
+     * @group all
+     * @covers Git_Lib::lsTree
+     **/
+    public function testLsTree() {
+        $data = $this->lib->lsTree('master');
+        $this->assertInternalType('array', $data);
+        $this->assertTrue(array_key_exists('tree', $data));
+        $this->assertTrue(array_key_exists('blob', $data));
+    } // end function testLsTree
 } // end class Test_Git_Lib extends Test_Git_BaseTest
 ?>

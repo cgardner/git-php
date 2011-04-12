@@ -198,9 +198,8 @@ class Git_Lib {
         else {
             return trim(file_get_contents($rev));
         }
-
-
     } // end function revParse
+
     /**
      * Get the full tree information
      * @param string $sha
@@ -210,6 +209,30 @@ class Git_Lib {
     public function fullTree($sha) {
         return $this->executeCommand('ls-tree', array('-r', $sha));
     } // end function fullTree
+    /**
+     * Get a list of the elements in a tree
+     * @param string $sha
+     * @return array
+     * @author Craig Gardner <craig_gardner@adp.com>
+     **/
+    public function lsTree($sha) {
+        $data = array(
+            'tree' => array(),
+            'blob' => array(),    
+        );
+
+        $treeData = explode("\n", $this->executeCommand('ls-tree', array($sha)));
+        foreach ($treeData as $line) {
+            list($info, $filename) = explode("\t", $line);
+            list($mode, $type, $sha) = explode(' ', $info);
+            $data[$type][$filename] = array(
+                'mode' => $mode,
+                'sha' => $sha,
+            );
+        }
+
+        return $data;
+    } // end function lsTree
     /**
      * Private Methods |privates
      */

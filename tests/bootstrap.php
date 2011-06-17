@@ -10,6 +10,9 @@ if (defined('LIBRARY_PATH') === FALSE) {
     define('LIBRARY_PATH', $libraryPath);
 }
 
+defined('TMP_DIR') ||
+    define('TMP_DIR', $this->getProject()->getProperty('project.tmpdir'));
+
 
 set_include_path(implode(PATH_SEPARATOR, array(
     LIBRARY_PATH,

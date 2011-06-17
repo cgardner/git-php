@@ -65,7 +65,7 @@
         <!-- Build the reports -->
         <phpunitreport infile="${coverage.testdir}/testsuites.xml" todir="${coverage.unitdir}" />
         <coverage-report>
-            <report todir="${coverage.reportdir}" styledir="${phing.home}/etc"/>
+            <report todir="${coverage.reportdir}"/>
         </coverage-report>
     </target>
 

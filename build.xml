@@ -20,6 +20,7 @@
     <!-- Target: prepare-test            -->
     <!-- =============================== -->
     <target name="prepare-test" depends="clean">
+        <mkdir dir="${project.tmpdir}" />
         <mkdir dir="${coverage.testdir}" />
         <mkdir dir="${coverage.reportdir}" />
         <mkdir dir="${coverage.unitdir}" />

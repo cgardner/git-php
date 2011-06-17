@@ -50,14 +50,14 @@ class Test_Git_Object extends Test_Git_BaseTest {
      **/
     public function factoryDataProvider() {
         return array(
-            'tag' => array(
+            /*'tag' => array(
                 array(
                     'test',
                     'tag',
                     TRUE
                 ),
                 'Git_Object_Tag',
-            ),
+            ),*/
             'commit' => array(
                 array(
                     'HEAD',

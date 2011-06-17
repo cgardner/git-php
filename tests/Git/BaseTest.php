@@ -76,7 +76,7 @@ class Test_Git_BaseTest extends PHPUnit_Framework_TestCase {
                 }
             }
         }
-        else {
+        elseif (file_exists($file)) {
             unlink($file);
         }
     } // end function removeFile

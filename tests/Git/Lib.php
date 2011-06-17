@@ -425,7 +425,7 @@ class Test_Git_Lib extends Test_Git_BaseTest {
      **/
     public function tagShaDataProvider() {
         return array(
-            array('test', TRUE),
+            //array('test', TRUE),
             array('does/not/exist', FALSE),
         );
     } // end function tagShaDataProvider

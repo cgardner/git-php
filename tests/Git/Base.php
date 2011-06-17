@@ -95,7 +95,7 @@ class Test_Git_Base extends Test_Git_BaseTest {
      * @coverse Git_Base::init
      **/
     public function testInit() {
-        $repoPath = sprintf('/tmp/%s', uniqid('test_repo_'));
+        $repoPath = sprintf('%s/%s', TMP_DIR, uniqid('test_repo_'));
         $base = $this->base->init($repoPath);
         $this->assertInstanceOf('Git_Base', $base);
         $this->assertFileExists($repoPath);
@@ -112,8 +112,8 @@ class Test_Git_Base extends Test_Git_BaseTest {
      * @covers Git_Base::cloneRepo
      **/
     public function testCloneRepo() {
-        $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
-        $repoPath = '/tmp/git-php';
+        $repoUrl = 'git://github.com/cgardner/git-php.git';
+        $repoPath = TMP_DIR .'/git-php';
         $this->deleteFiles[] = $repoPath;
         $this->tearDown();
         $options = array(
@@ -138,8 +138,8 @@ class Test_Git_Base extends Test_Git_BaseTest {
      * @covers Git_Base::repoSize
      **/
     public function testRepoSize() {
-        $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
-        $repoPath = '/tmp/git-php';
+        $repoUrl = 'git://github.com/cgardner/git-php.git';
+        $repoPath = TMP_DIR .'/git-php';
         $this->deleteFiles[] = $repoPath;
         $options = array(
             'working_directory' => $repoPath,

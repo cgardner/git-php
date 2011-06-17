@@ -47,13 +47,13 @@ class Test_Git_Lib extends Test_Git_BaseTest {
      * Repository URL
      * @var string
      **/
-    private $repoUrl = 'git@DSADPCGITPOREH.plaza.ds.adp.com:gardnerc/git-php.git';
+    private $repoUrl = 'git://github.com/cgardner/git-php.git';
 
     /**
      * undocumented class variable
      * @var string
      **/
-    private $repoPath = '/tmp/git-php';
+    private $repoPath = '';
 
     /**
      * setUp
@@ -65,7 +65,7 @@ class Test_Git_Lib extends Test_Git_BaseTest {
         parent::setUp();
         $this->object = $this->base->object('master');
         $this->lib = $this->base->getLib();
-
+        $this->repoPath = TMP_DIR .'/git-php';
 
         $this->iniFile = sprintf('%s/.git/config', $this->base->getWorkingDirectory()->getPath());
         $this->origIniString = file_get_contents($this->iniFile);

@@ -44,7 +44,7 @@
             <fileset dir="${project.basedir}/library">
                 <include name="**/*.php" />
                 <exclude name="**/Exception**" />
-                <exclude name="{$project.testdir}/**/*.php" />
+                <exclude name="{$project.basedir}/tests/**/*.php" />
             </fileset>
         </coverage-setup>
 
@@ -64,7 +64,7 @@
         <!-- Build the reports -->
         <phpunitreport infile="${coverage.testdir}/testsuites.xml" todir="${coverage.unitdir}" />
         <coverage-report>
-            <report todir="${coverage.reportdir}" styledir="/home/gardnerc/src/PEAR/phing/etc/" />
+            <report todir="${coverage.reportdir}" styledir="${phing.home}/etc"/>
         </coverage-report>
     </target>
 

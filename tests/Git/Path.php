@@ -27,7 +27,7 @@ class Test_Git_Path extends Test_Git_BaseTest {
      * @author Craig Gardner <craig_gardner@adp.com>
      **/
     public function setUp() {
-        $this->testPath = '/tmp';
+        $this->testPath = TMP_DIR;
         $this->path = new Git_Path($this->testPath);
     } // end function setUp
 

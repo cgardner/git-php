@@ -178,7 +178,7 @@ class Test_Git_Lib extends Test_Git_BaseTest {
 
         // Check the git settings
         $ini = parse_ini_file(sprintf('%s/.git/config', $this->repoPath), TRUE);
-        $this->assertEquals($this->repoUrl, $ini['remote "origin"']['url']);
+        $this->assertEquals($this->repoUrl, $ini['remote origin']['url']);
     } // end function testCloneRepo
 
     /**
@@ -239,7 +239,7 @@ class Test_Git_Lib extends Test_Git_BaseTest {
 
         // Check the git settings
         $ini = parse_ini_file(sprintf('%s/.git/config', $this->repoPath), TRUE);
-        $this->assertTrue(array_key_exists(sprintf('remote "%s"', $remote), $ini));
+        $this->assertTrue(array_key_exists(sprintf('remote %s', $remote), $ini));
     } // end function testCloneRepoOrigin
 
     /**

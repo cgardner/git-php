@@ -127,8 +127,9 @@ class Test_Git_Base extends Test_Git_BaseTest {
 
         // Check the git settings
         $ini = parse_ini_file(sprintf('%s/.git/config', $repoPath), TRUE);
-        $this->assertEquals($repoUrl, $ini['remote "origin"']['url']);
+        $this->assertEquals($repoUrl, $ini['remote origin']['url']);
     } // end function testCloneRepo
+
     /**
      * Test the repoSize method
      * @param void

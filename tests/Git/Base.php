@@ -1,6 +1,6 @@
 <?php
 require_once 'Git/Base.php';
-require_once 'tests/Git/Base.php';
+require_once 'tests/Git/BaseTest.php';
 
 /**
  * Test the Base Class

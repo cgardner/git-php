@@ -69,7 +69,7 @@
     </target>
 
     <!-- =============================== -->
-    <!-- Target: public                -->
+    <!-- Target: public                  -->
     <!-- =============================== -->
     <target name="public" depends="test">
         <property name="coverage.public" value="/home/gardnerc/public_html/git-php" />
